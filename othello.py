@@ -51,6 +51,8 @@ def check_valid(x, y, turn):
 def continue_game():
     return (WHITE_SCORE + BLACK_SCORE < GRID_SIZE * GRID_SIZE)
 
+def flip_pieces(x, y, turn):
+
 
 def main():
 
@@ -73,6 +75,7 @@ def main():
 
         valid_choice = False
         while(valid_choice != True):
+            
             if (not turn):
                 # human move
                 choice_x = int(input("Enter x-coordinate for black: "))
@@ -82,14 +85,16 @@ def main():
                 if (valid_choice is False):
                     print("Invalid choice.")
                 # update pieces <add code>
+                BOARD[choice_x - 1][choice_y - 1] = 0 # update board with new move
+                flip_pieces(choice_x - 1, choice_y - 1, turn)
                 turn = not turn
+            
             else:
                 # AI's move
                 # play with minmax 
                 # <add code>
                 turn = not turn
 
-        BOARD[choice_x - 1][choice_y - 1] = 0
         display_board()
 
 if __name__ == "__main__":
