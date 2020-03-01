@@ -9,6 +9,17 @@ WHITE_SCORE = 2
 BLACK_SCORE = 2
 # GLOBALS
 
+def update_score():
+    global WHITE_SCORE
+    global BLACK_SCORE
+    BLACK_SCORE = WHITE_SCORE = 0
+    for i in range(0, GRID_SIZE):
+        for j in range(0, GRID_SIZE):
+            if (BOARD[i][j] == 0):
+                BLACK_SCORE += 1
+            elif (BOARD[i][j] == 1):
+                WHITE_SCORE += 1
+                
 
 def display_board():
     for i in range(0, GRID_SIZE):
