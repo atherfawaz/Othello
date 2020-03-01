@@ -4,7 +4,7 @@
 GRID_SIZE = 8
 # EASY for not generating moves; HARD for generating player moves till depth >= 3
 DIFFICULTY = 'EASY'
-BOARD = [[-1 for x in range(GRID_SIZE)] for y in range(GRID_SIZE)]
+BOARD = [[5 for x in range(GRID_SIZE)] for y in range(GRID_SIZE)]
 WHITE_SCORE = 2
 BLACK_SCORE = 2
 # GLOBALS
@@ -26,6 +26,8 @@ def display_board():
         for j in range(0, GRID_SIZE):
             print(BOARD[i][j], end=' ')
         print()
+    print("Black's Score: ", BLACK_SCORE)
+    print("White's Score: ", WHITE_SCORE)
 
 
 def evaluation_function(black_count, white_count):
@@ -56,14 +58,14 @@ def check_valid(x, y, turn):
     # (horizontal, vertical, or diagonal) occupied line 
     # between the new disc and another black disc, with 
     # one or more contiguous white pieces between them. 
-    return is_adjacent(x, y, turn) and BOARD[x][y] == -1
+    return is_adjacent(x, y, turn) and BOARD[x][y] == 5
 
 
 def continue_game():
     return (WHITE_SCORE + BLACK_SCORE < GRID_SIZE * GRID_SIZE)
 
 def flip_pieces(x, y, turn):
-
+    dummy = None
 
 def main():
 
@@ -97,14 +99,15 @@ def main():
                     print("Invalid choice.")
                 # update pieces <add code>
                 BOARD[choice_x - 1][choice_y - 1] = 0 # update board with new move
-                flip_pieces(choice_x - 1, choice_y - 1, turn)
-                turn = not turn
+                #flip_pieces(choice_x - 1, choice_y - 1, turn)
+                turn = 1 - turn
+                update_score()
             
             else:
                 # AI's move
                 # play with minmax 
                 # <add code>
-                turn = not turn
+                turn = 1 - turn
 
         display_board()
 
