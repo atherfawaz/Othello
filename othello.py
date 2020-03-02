@@ -217,7 +217,6 @@ def main():
 
     # white = 1
     # black = 0
-    BOARD[2][3] = 1
     BOARD[initial_position][initial_position] = 1  # white top-left
     BOARD[initial_position + 1][initial_position + 1] = 1  # white bottom-right
     BOARD[initial_position][initial_position + 1] = 0  # black top-right
