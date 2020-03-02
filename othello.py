@@ -97,19 +97,18 @@ def main():
                 valid_choice = check_valid(choice_x - 1, choice_y - 1, turn)
                 if (valid_choice is False):
                     print("Invalid choice.")
-                # update pieces <add code>
-                BOARD[choice_x - 1][choice_y - 1] = 0 # update board with new move
-                #flip_pieces(choice_x - 1, choice_y - 1, turn)
-                turn = 1 - turn
-                update_score()
             
             else:
                 # AI's move
                 # play with minmax 
                 # <add code>
                 turn = 1 - turn
-
+        
+        BOARD[choice_x - 1][choice_y - 1] = 0 # update board with new move
+        # update pieces <add code>
+        #flip_pieces(choice_x - 1, choice_y - 1, turn)
+        turn = 1 - turn
+        update_score()
         display_board()
-
 if __name__ == "__main__":
     main()
