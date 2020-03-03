@@ -1,4 +1,6 @@
 # Othello
+import copy
+
 
 # GLOBALS
 GRID_SIZE = 8
@@ -32,12 +34,44 @@ def display_board():
 
 
 def evaluation_function(black_count, white_count):
-    return (black_count - white_count)
-
+    return (white_count - black_count)
 
 def modified_evaluation_function(arguments):
     # do crazy shit here if needed
     dummy = None
+
+def opponent_turn(DIFFICULTY,turn):
+    max_ = -1000
+    global BOARD
+    global BLACK_SCORE
+    global WHITE_SCORE
+    ORIG_BOARD = copy.deepcopy(BOARD)
+    origBlackScore = BLACK_SCORE
+    origWhiteScore = WHITE_SCORE
+    turnVals = {'x':-1,'y':-1,'check':False}
+    if (DIFFICULTY == 'EASY'):
+        for i in range(0,GRID_SIZE):
+            for j in range(0,GRID_SIZE):
+                if check_valid(i, j, turn, True):
+                    BOARD[turnVals['x']][turnVals['y']] = turn
+                    update_score()
+                    x = evaluation_function(BLACK_SCORE,WHITE_SCORE)
+                    BOARD = copy.deepcopy(ORIG_BOARD) 
+                    BLACK_SCORE = origBlackScore
+                    WHITE_SCORE = origWhiteScore
+                    if x>max_:
+                        max_ = x
+                        turnVals['x']=i
+                        turnVals['y']=j
+                        turnVals['check']=True
+    BOARD = copy.deepcopy(ORIG_BOARD) 
+    BLACK_SCORE = origBlackScore
+    WHITE_SCORE = origWhiteScore
+    return turnVals               
+                
+
+
+
 
 
 def is_flip_possible(x, y, oppX, oppY, turn, doFlipping):
@@ -236,26 +270,28 @@ def main():
                 choice_x = int(input("Enter x-coordinate for black: "))
                 choice_y = int(input("Enter y-coordinate for black: "))
                 # check if the player has entered a valid move
-                valid_choice = check_valid(
-                    choice_x - 1, choice_y - 1, turn, True)
+                valid_choice = check_valid(choice_x - 1, choice_y - 1, turn, True)
                 if (valid_choice is False):
                     print("Invalid choice.")
 
             # update board with new move
             BOARD[choice_x - 1][choice_y - 1] = turn
-            turn = 1
 
-            if (turn == 1):
-                # turn for ai
-                dummy = 1
-                turn = 0
-                # AI's move
-                # play with minmax
-                # <add code>
+        if (turn == 1):
+            # turn for ai
+            turnVals = opponent_turn(DIFFICULTY,turn)
+            if turnVals['check'] is True: 
+                is_condition_satisfied(turnVals['x'], turnVals['y'],  turn, True)
+                BOARD[turnVals['x']][turnVals['y']] = turn
+            # AI's move
+            # play with minmax
+            # <add code>
 
         # update score and display board
         update_score()
         display_board()
+        input("Press for next turn..")
+        turn = 1-turn
 
 
 if __name__ == "__main__":
