@@ -15,19 +15,15 @@ INITIAL = True
 #sets up the window size
 def setup():
     size(800,800)
+    initial_position = int((GRID_SIZE / 2) - 1)
+    BOARD[initial_position][initial_position] = 1  # white top-left
+    BOARD[initial_position + 1][initial_position + 1] = 1  # white bottom-right
+    BOARD[initial_position][initial_position + 1] = 0  # black top-right
+    BOARD[initial_position + 1][initial_position] = 0  # black bottom-left
 
 #gets called whenever board is updated
 def draw():
-    background(0)
-    global INITIAL
     x,y = 70,70
-    if(INITIAL):    
-        initial_position = int((GRID_SIZE / 2) - 1)
-        BOARD[initial_position][initial_position] = 1  # white top-left
-        BOARD[initial_position + 1][initial_position + 1] = 1  # white bottom-right
-        BOARD[initial_position][initial_position + 1] = 0  # black top-right
-        BOARD[initial_position + 1][initial_position] = 0  # black bottom-left
-        INITIAL = False
     for row in range(0, GRID_SIZE):
         for col in range(0, GRID_SIZE):
             if (BOARD[row][col] == 5):
